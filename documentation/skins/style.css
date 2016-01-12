@@ -1,0 +1,67 @@
+@charset "utf-8";
+/* CSS Document */
+
+	html { background:#FFF;}
+	body { color:#000000;}
+	h1, h1 a, h1 a:hover { color: #81164e; }
+	h2, h2 a, h2 a:hover { color: #81164e; }
+	h3, h3 a, h3 a:hover { color: #81164e; }
+	h4, h4 a, h4 a:hover { color: #81164e; }
+	h5, h5 a, h5 a:hover { color: #81164e; }
+	h6, h6 a, h6 a:hover { color: #81164e; }
+	
+	.tooltip:hover:after, 
+	.tooltip.hover:after { background: #444; color: #fff; }
+/* #Links
+================================================== */
+	
+	a, a:hover { color: #869f07; }
+	a.button {color: #fff; background:#1abc9c;}
+	a.button:hover { background: #129f83;}
+	
+/* #Layout
+================================================== */
+
+/* #Header */
+	#Header { background:#FFF; }
+	#Header #Top_bar{ background: #FFF; color:#000;}
+	#Header #Top_bar .addons_menu li a {color:#81164e;}
+	#Header #Top_bar .addons_menu li a:hover { text-decoration: none; color:#81164e; }
+	
+	#menu-container { background-color:#81164e;}
+	#main-menu > ul > li:hover {background: #434343 none repeat scroll 0 0;}
+	#main-menu > ul > li:hover a { background: #434343; color: #FFF;	}
+	#main-menu > ul > li:hover a i {color: #FFF !important;	}
+	#main-menu > ul > li.active a { background: #434343; color: #FFF;	}
+	#Header #Top_bar .addons_menu li a:hover { color: #81164e;;}
+	#main-menu ul li ul li a:hover, #main-menu ul li ul li.hover > a { background: #FFF; color: #000; text-decoration: none;}
+	#main-menu ul li:hover a {  }
+	#main-menu ul li.menu-item-simple-parent ul { background-color:#21c2f8;}
+	#main-menu ul li.hover ul li ul li a { background: #434343 !important; }
+	#main-menu ul li.hover ul li ul li a:hover { background: #FFF !important; }
+
+	
+	
+	#footer .addons_menu li a:hover { color: #ec6d01; }
+	#footer { background:#333; }
+	.copyright { background:#81164e;}
+	
+	.button a { background-color: #81164e;}
+	.button a:hover, a.button:hover { background-color:#d67f02; color:#FFF;}
+	
+	.image-overlay { background-color:rgba(129, 22, 78, 0.2);}
+	.image-overlay .white-box::before { background-color: rgba(155, 183, 13, 0.1); }
+	.links .hexagon {background: #81164e;}
+
+	
+	
+	.dt-sc-info-box, .dt-sc-info-box span {	color: #FFF;}
+	.dt-sc-info-box a{ color: #FFF;}
+	.dt-sc-info-box a:hover{ color: #FFF; }
+	
+	.dt-sc-info-box { background: rgba(48, 168, 173, 0.6); border-color: #30a8ad;	color:#000;	}
+
+	.dt-sc-info-box2 { background: rgba(255, 255, 25, 0.6);	border-color: #ffff19;	color:#000;	}
+	.dt-sc-info-box3 { background: rgba(204, 24, 30, 1); border-color: #ffff19;	color:#000;	}
+
+
