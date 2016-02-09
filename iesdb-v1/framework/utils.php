@@ -576,7 +576,9 @@ function dttheme_show_footer_widgetarea($count) {
  * Check the plugin is activated
  */
 function dttheme_is_plugin_active($plugin) {
-	return in_array ( $plugin, ( array ) get_option ( 'active_plugins', array () ) );
+	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+	if (is_plugin_active($plugin) || is_plugin_active_for_network($plugin)) return true;
+	else return false;
 }
 // # --- **** dttheme_is_plugin_active() *** --- ###
 
@@ -705,6 +707,8 @@ function dttheme_load_basic_css() {
 	
 	wp_enqueue_style ( 'custom-font-awesome', IAMD_BASE_URL . 'css/font-awesome.min.css' );
 	//wp_enqueue_style ( 'custom-font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css' );
+	
+	wp_enqueue_style ( 'stoke-gap-icons', IAMD_BASE_URL . 'css/stroke-gap-icons.min.css' );
 
 	if(dttheme_is_plugin_active('woothemes-sensei/woothemes-sensei.php')) wp_enqueue_style('sensei', IAMD_BASE_URL.'sensei/css/style.css');
 	
@@ -1186,4 +1190,16 @@ function dt_dashboard_teacher_assignments() {
 	die();
 }
 
+add_action('wp_ajax_dttheme_ajax_importer', 'dttheme_ajax_importer');
+function dttheme_ajax_importer() {
+	require_once IAMD_TD . '/framework/importer/import.php';
+}
+
+function dttheme_customize_comment_fields( $fields ) {
+	$comment_field = $fields['comment'];
+	unset( $fields['comment'] );
+	$fields['comment'] = $comment_field;
+	return $fields;
+}
+add_filter( 'comment_form_fields', 'dttheme_customize_comment_fields' );
 ?>

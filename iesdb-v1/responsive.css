@@ -394,10 +394,10 @@
 		
 		.dt-sc-ico-content.type1 { padding-left:60px; }
 		.dt-sc-ico-content.type1 h4 { font-size:20px; }
-		.dt-sc-ico-content.type1 .icon { widows:40px; }
-		.dt-sc-ico-content.type1 .icon span { font-size:40px; }
+		.dt-sc-ico-content.type1 .custom-icon { widows:40px; }
+		.dt-sc-ico-content.type1 .custom-icon span { font-size:40px; }
 		
-		.dt-sc-ico-content.type4 .icon span { font-size:52px; }
+		.dt-sc-ico-content.type4 .custom-icon span { font-size:52px; }
 		
 		.dt-sc-callout-box h4, .dt-sc-callout-box.with-icon h4 { font-size:16px; }
 		.dt-sc-callout-box h5, .dt-sc-callout-box.with-icon h5 { font-size:14px; }
@@ -855,6 +855,9 @@
 		
 		#secondary-right.secondary-has-right-sidebar, #secondary-right.secondary-has-both-sidebar { margin:35px 0px 0px; }
 		
+		#secondary-left.secondary-has-both-sidebar, #secondary-right.secondary-has-both-sidebar { display: table-cell; float: none; }
+		#primary.with-left-sidebar, #primary.with-right-sidebar { display: table-caption; float: none; }
+		
 		/*----*****---- << Newsletter >> ----*****----*/		
 		#newsletter h4 { margin:0px 0px 20px; line-height:normal; }
 		#newsletter form input[type="email"] { margin:0px 0px 20px; width:100%; border-radius:3px; }
@@ -887,7 +890,7 @@
 		.dt-sc-callout-box .dt-sc-button { float:none; }
 		.dt-sc-callout-box .dt-sc-one-fifth { margin-bottom:0px; margin-top:-10px; }
 		
-		.dt-sc-ico-content.type4 .icon span { font-size:52px; }
+		.dt-sc-ico-content.type4 .custom-icon span { font-size:52px; }
 		.dt-sc-ico-content.type6 { margin-top:45px; }
 		
 		h5.dt-sc-toggle, h5.dt-sc-toggle-accordion { font-size:14px; }
@@ -1021,6 +1024,9 @@
 		.type-quiz .lesson-meta form { clear:both; margin-bottom:20px; display:inline-block; }
 		.type-quiz .lesson-course { clear:both; }
 		
+		.dt-sc-callout-box.membership-box.type5 { width:100%; margin-bottom:1px; box-sizing:border-box; }
+		.dt-sc-callout-box.membership-box.type5::after { content:none; }
+		
 		/*----*****---- << Custom Course Type >> ----*****----*/
 		.courses-table-list th, .courses-table-list td { padding:10px; }
 		.courses-table-list th, .courses-table-list td { font-size:11px; }
@@ -1153,6 +1159,10 @@
 		
 		.courses-search input[type="text"] { width:85%; box-shadow:0px 0px 2px rgba(0, 0, 0, 0.1); }
 		
+		.bgimage-with-two-colors { background-position:left center; }
+		.bgimage-with-two-colors .color-white.border-title span { background:#000; }
+	   .bgimage-with-two-colors .color-white { color:#000; }
+	   
 		/*----*****---- << Portfolio >> ----*****----*/	
 		
 		/*----*****---- << Blog >> ----*****----*/	
@@ -1230,6 +1240,10 @@
 		
 		blockquote.alignleft { width:82%; }
 		blockquote.alignright { width:82%; }
+		
+		.bgimage-with-two-colors { background-position:left center; }
+		.bgimage-with-two-colors .color-white.border-title span { background:#000; }
+	   .bgimage-with-two-colors .color-white { color:#000; }
 		
 		/*----*****---- << Woocommerce >> ----*****----*/
 		.woocommerce-cart table.shop_table, .woocommerce-account table.my_account_orders, .woocommerce-wishlist table.shop_table { display:block; position:relative; width:100%; position:relative; border-bottom:1px solid #dddddd; }
@@ -1566,7 +1580,7 @@
 		
 		.widget #wp-calendar th, .widget #wp-calendar td { padding:5px; }
 		
-		.dt-sc-ico-content.type2 .icon span { height:40px; width:40px; line-height:40px; border-radius:40px; font-size:20px; }
+		.dt-sc-ico-content.type2 .custom-icon span { height:40px; width:40px; line-height:40px; border-radius:40px; font-size:20px; }
 		.dt-sc-ico-content.type2 { padding-left:55px; }
 		
 		ul.dt-sc-staff-carousel > li { max-width:200px; width:200px !important; }
@@ -1803,8 +1817,4 @@
 		.dashboard-content .dt-sc-course-completed, .dashboard-content .dt-sc-course-pending, .dashboard-content .dt-sc-course-notgraded { line-height:21px; font-size:10px; padding:1px 7px 2px; }
 		
 		.dashboard-content ul.teachers-details li { font-size:12px; }
-
-
 	}
-	
-	

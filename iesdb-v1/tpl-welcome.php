@@ -5,7 +5,11 @@ get_header();
 	$tpl_default_settings = get_post_meta( $post->ID, '_tpl_default_settings', TRUE );
 	$tpl_default_settings = is_array( $tpl_default_settings ) ? $tpl_default_settings  : array();
 
-	$page_layout  = array_key_exists( "layout", $tpl_default_settings ) ? $tpl_default_settings['layout'] : "content-full-width";
+	if($GLOBALS['force_enable'] == true)
+		$page_layout = $GLOBALS['page_layout'];
+	else
+		$page_layout  = array_key_exists( "layout", $tpl_default_settings ) ? $tpl_default_settings['layout'] : "content-full-width";
+
 	$show_sidebar = $show_left_sidebar = $show_right_sidebar =  false;
 	$sidebar_class = "";
 

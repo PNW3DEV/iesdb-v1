@@ -63,6 +63,114 @@
           
             <div class="bpanel-box">
                 <div class="box-title">
+                    <h3><?php _e('s2Member Settings','dt_themes');?></h3>
+                </div>
+                <div class="box-content">
+
+					<?php 
+					if(dttheme_is_plugin_active('s2member/s2member.php')) {
+						
+						if($GLOBALS["WS_PLUGIN__"]["s2member"]["o"]["pro_gateways_seen"] == 1) {
+							echo '<h6><strong>'.__('Choose Payment Types', 'dt_themes').'</strong></h6><div class="clear"></div>';
+							$payments = $GLOBALS["WS_PLUGIN__"]["s2member"]["o"]["pro_gateways_enabled"];
+							$payments = array_merge($payments); 
+							$payments_selected = dttheme_option('dt_course', 'payments-selected');
+							$payments_selected = !empty($payments_selected) ? $payments_selected : array();
+							foreach($payments as $payment_key => $payment) {
+								$checked = (in_array(trim($payment), $payments_selected)) ? 'checked="checked"' : '';
+								echo '<label><input type="checkbox" name="mytheme[dt_course][payments-selected][]" value="'.$payment.'" '.$checked.' />'.ucfirst($payment).'</label>';
+							}
+							echo '<div class="hr_invisible"></div><div class="hr_invisible"></div><h6><strong>'.__('Click Bank Settings', 'dt_themes').'</strong></h6><div class="clear"></div>';
+							echo '<div class="column one-half">
+									<label>'.__('Product Item No','dt_themes').'</label>
+								  </div>
+								  <div class="column one-half last">
+									<input name="mytheme[dt_course][s2member-cb-productno]" type="text" class="medium" value="'.trim(stripslashes(dttheme_wp_kses(dttheme_option('dt_course','s2member-cb-productno')))).'" />
+								  </div>
+								  <div class="hr_invisible"></div>';
+							echo '<div class="column one-half">
+									<label>'.__('Order Form Template (Skin)','dt_themes').'</label>
+								  </div>
+								  <div class="column one-half last">
+									<input name="mytheme[dt_course][s2member-cb-skin]" type="text" class="medium" value="'.trim(stripslashes(dttheme_wp_kses(dttheme_option('dt_course','s2member-cb-skin')))).'" />
+								  </div>
+								  <div class="hr_invisible"></div>';
+							echo '<div class="column one-half">
+									<label>'.__('PitchPlus Upsell Flow ID','dt_themes').'</label>
+								  </div>
+								  <div class="column one-half last">
+									<input name="mytheme[dt_course][s2member-cb-flowid]" type="text" class="medium" value="'.trim(stripslashes(dttheme_wp_kses(dttheme_option('dt_course','s2member-cb-flowid')))).'" />
+								  </div>
+								  <div class="hr_invisible"></div><div class="hr_invisible"></div><div class="hr_invisible"></div>';
+						}
+						
+						
+						
+						for ($n = 1; $n <= $GLOBALS["WS_PLUGIN__"]["s2member"]["c"]["levels"]; $n++) { 
+	
+							echo '<h6><strong>'.do_shortcode("[s2Get constant='S2MEMBER_LEVEL{$n}_LABEL'/]").' ('.__('s2Member Level', 'dt_themes').' '.$n.')</strong></h6><div class="clear"></div>';
+							echo '<div class="column one-third">
+									<label>'.__('Description','dt_themes').'</label>
+								  </div>
+								  <div class="column two-third last">
+									<input name="mytheme[dt_course][s2member-'.$n.'-description]" type="text" class="large" value="'.trim(stripslashes(dttheme_wp_kses(dttheme_option('dt_course','s2member-'.$n.'-description')))).'" />
+								  </div>
+								  <div class="hr_invisible"></div>';
+							echo '<div class="column one-third">
+									<label>'.__('Period','dt_themes').'</label>
+								  </div>
+								  <div class="column two-third last">
+									<input name="mytheme[dt_course][s2member-'.$n.'-period]" type="text" class="medium" value="'.trim(stripslashes(dttheme_wp_kses(dttheme_option('dt_course','s2member-'.$n.'-period')))).'" />
+								  </div>
+								  <div class="hr_invisible"></div>';
+							echo '<div class="column one-third">
+									<label>'.__('Term','dt_themes').'</label>
+								  </div>
+								  <div class="column two-third last">
+									<select name="mytheme[dt_course][s2member-'.$n.'-term]">';
+										$terms = array('', 'D' => 'Day(s)', 'W' => 'Week(s)', 'M' => 'Month(s)', 'Y' => 'Year(s)', 'L' => 'Lifetime');
+										foreach($terms as $term_key => $term){
+											$selected = selected(dttheme_option('dt_course','s2member-'.$n.'-term'), $term_key, false );
+											echo '<option value="'.$term_key.'" '.$selected.'>'.$term.'</option>';
+										}
+								echo '</select>
+								  </div>';
+							
+							if($n > 1) {	  
+								echo '<div class="hr_invisible"></div>
+									  <div class="column one-third">
+										<label>'.__('Price','dt_themes').'</label>
+									  </div>
+									  <div class="column two-third last">
+										<input name="mytheme[dt_course][s2member-'.$n.'-price]" type="text" class="medium" value="'.trim(stripslashes(dttheme_wp_kses(dttheme_option('dt_course','s2member-'.$n.'-price')))).'" />
+									  </div>';
+							}
+							
+							echo '<div class="hr_invisible"></div><div class="hr_invisible"></div>';
+							
+						}
+						
+						echo '<h6><strong>'.__('Notes:', 'dt_themes').'</strong></h6>';
+						echo '<ul class="s2member-notes">';
+							echo '<li><strong>'.__('s2Member Level 1', 'dt_themes').'</strong> - '.__('These are users who are going to purchase only particular course. Course price will be applied.', 'dt_themes').'</li>';
+							echo '<li><strong>'.__('s2Member Level 2, s2Member Level 3, s2Member Level 4', 'dt_themes').'</strong> - '.__('Users will have access to all courses for specified period and term. Price have to be mentioned here.', 'dt_themes').'</li>';
+							echo '<li><strong>'.__('Description', 'dt_themes').'</strong> - '.__('Will appear in the purchase page.', 'dt_themes').'</li>';
+							echo '<li><strong>'.__('Period', 'dt_themes').'</strong> - '.__('Must be >= 1. (ex: 1 Week, 2 Months, 1 Month, 3 Days).', 'dt_themes').'</li>';
+							echo '<li><strong>'.__('Term', 'dt_themes').'</strong> - '.__('Regular Term. Days, Weeks, Months, Years, Lifetime.', 'dt_themes').'</li>';
+							echo '<li><strong>'.__('Price', 'dt_themes').'</strong> - '.__('Price for the package. Applicable only for s2Member Level 2, s2Member Level 3, s2Member Level 4.', 'dt_themes').'</li>';
+						echo '</ul>';
+					
+					} else {
+						echo __('Please activate s2Member plugin in order to continue!', 'dt_themes');	
+					}
+					
+                    ?>
+                    
+                </div>
+            </div>
+          
+            <div class="bpanel-box">
+                <div class="box-title">
                     <h3><?php _e('Archive Page','dt_themes');?></h3>
                 </div>
                 <div class="box-content">
@@ -139,7 +247,64 @@
                 </div>
             </div>
             
-		</div><!-- #default-course starts here --> 
+            <div class="bpanel-box">
+                <div class="box-title">
+                    <h3><?php _e('Permalink Settings','dt_themes');?></h3>
+                </div>
+                <div class="box-content">
+
+                    <div class="column one-third"><label><?php esc_html_e('Single Course slug', 'priority');?></label></div>
+                    <div class="column two-third last">
+                        <input name="mytheme[dt_course][single-course-slug]" type="text" class="medium" value="<?php echo trim(stripslashes(dttheme_option('dt_course','single-course-slug')));?>" />
+                        <p class="note"><?php esc_html_e('Do not use characters not allowed in links. Use, eg. courses <br> <b>After change go to Settings > Permalinks and click Save changes.</b>', 'priority');?></p>
+                    </div>
+                    <div class="hr"></div>
+
+                    <div class="column one-third"><label><?php esc_html_e('Course Category slug', 'priority');?></label></div>
+                    <div class="column two-third last">
+                        <input name="mytheme[dt_course][course-category-slug]" type="text" class="medium" value="<?php echo trim(stripslashes(dttheme_option('dt_course','course-category-slug')));?>" />
+                        <p class="note"><?php esc_html_e('Do not use characters not allowed in links. Use, eg. coursecategory <br> <b>After change go to Settings > Permalinks and click Save changes.</b>', 'priority');?></p>
+                    </div>
+                    <div class="hr"></div>
+                    
+                    <div class="column one-third"><label><?php esc_html_e('Single Lesson slug', 'priority');?></label></div>
+                    <div class="column two-third last">
+                        <input name="mytheme[dt_course][single-lesson-slug]" type="text" class="medium" value="<?php echo trim(stripslashes(dttheme_option('dt_course','single-lesson-slug')));?>" />
+                        <p class="note"><?php esc_html_e('Do not use characters not allowed in links. Use, eg. lessons <br> <b>After change go to Settings > Permalinks and click Save changes.</b>', 'priority');?></p>
+                    </div>
+                    <div class="hr"></div>
+
+                    <div class="column one-third"><label><?php esc_html_e('Lesson Category slug', 'priority');?></label></div>
+                    <div class="column two-third last">
+                        <input name="mytheme[dt_course][lesson-category-slug]" type="text" class="medium" value="<?php echo trim(stripslashes(dttheme_option('dt_course','lesson-category-slug')));?>" />
+                        <p class="note"><?php esc_html_e('Do not use characters not allowed in links. Use, eg. lesson-complexity <br> <b>After change go to Settings > Permalinks and click Save changes.</b>', 'priority');?></p>
+                    </div>
+                    <div class="hr"></div>
+
+                    <div class="column one-third"><label><?php esc_html_e('Single Question slug', 'priority');?></label></div>
+                    <div class="column two-third last">
+                        <input name="mytheme[dt_course][single-question-slug]" type="text" class="medium" value="<?php echo trim(stripslashes(dttheme_option('dt_course','single-question-slug')));?>" />
+                        <p class="note"><?php esc_html_e('Do not use characters not allowed in links. Use, eg. questions <br> <b>After change go to Settings > Permalinks and click Save changes.</b>', 'priority');?></p>
+                    </div>
+                    <div class="hr"></div>
+
+                    <div class="column one-third"><label><?php esc_html_e('Single Quiz slug', 'priority');?></label></div>
+                    <div class="column two-third last">
+                        <input name="mytheme[dt_course][single-quiz-slug]" type="text" class="medium" value="<?php echo trim(stripslashes(dttheme_option('dt_course','single-quiz-slug')));?>" />
+                        <p class="note"><?php esc_html_e('Do not use characters not allowed in links. Use, eg. quizes <br> <b>After change go to Settings > Permalinks and click Save changes.</b>', 'priority');?></p>
+                    </div>
+                    <div class="hr"></div>
+
+                    <div class="column one-third"><label><?php esc_html_e('Single Assignment slug', 'priority');?></label></div>
+                    <div class="column two-third last">
+                        <input name="mytheme[dt_course][single-assignment-slug]" type="text" class="medium" value="<?php echo trim(stripslashes(dttheme_option('dt_course','single-assignment-slug')));?>" />
+                        <p class="note"><?php esc_html_e('Do not use characters not allowed in links. Use, eg. assignments <br> <b>After change go to Settings > Permalinks and click Save changes.</b>', 'priority');?></p>
+                    </div>
+                    
+                </div>
+            </div>            
+            
+		</div><!-- #default-course ends here --> 
         
                 
         <!-- #my-sensei starts here --> 

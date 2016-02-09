@@ -92,7 +92,7 @@ jQuery(document).ready(function($){
 		
 		$.ajax({
 			type: "POST",
-			url: mytheme_urls.url + '/wp-content/themes/lms/framework/courses_utils.php',
+			url: mytheme_urls.url + '/wp-content/themes/' + mytheme_urls.themeName + '/framework/courses_utils.php',
 			data:
 			{
 				post_id: postid,
@@ -119,7 +119,10 @@ jQuery(document).ready(function($){
 		});
 	
 	}
-		
+	
+	
+	// Dashboard 
+	
 	$( 'body' ).delegate( '#dt-sc-dashboard-user-courses .pagination a', 'click', function(){
 			
 		var curr_page = $(this).text();	
@@ -263,5 +266,56 @@ jQuery(document).ready(function($){
 		return false;
 		
 	});
+	
+	
+	// Payments
+	
+	$( 'body' ).delegate( '.ajax-payment', 'click', function(){	
+		
+		var paymenttype = $(this).attr('data-paymenttype'),
+			level = $(this).attr('data-level'),
+			description = $(this).attr('data-description'),
+			currency = $(this).attr('data-currency'),
+			price = $(this).attr('data-price'),
+			period = $(this).attr('data-period'),
+			term = $(this).attr('data-term'),
+			cbproductno = $(this).attr('data-cbproductno'),
+			cbskin = $(this).attr('data-cbskin'),
+			cbflowid = $(this).attr('data-cbflowid');
+			
+		$.ajax({
+			type: "POST",
+			url: mytheme_urls.url + '/wp-content/themes/' + mytheme_urls.themeName + '/framework/payment_utils.php',
+			data:
+			{
+				paymenttype: paymenttype,
+				level: level,
+				description: description,
+				currency: currency,
+				price: price,
+				period: period,
+				term: term,
+				cbproductno: cbproductno,
+				cbskin: cbskin,
+				cbflowid: cbflowid
+			},
+			beforeSend: function(){
+				$('#dt-sc-ajax-load-image').show();
+			},
+			error: function (xhr, status, error) {
+				$('#payment-ajax-content').html('Something went wrong!');
+			},
+			success: function (response) {
+				$('#payment-ajax-content').html(response);
+			},
+			complete: function(){
+				$('#dt-sc-ajax-load-image').hide();
+			} 
+		});
+			
+		return false;
+			
+	});
+
   
 });

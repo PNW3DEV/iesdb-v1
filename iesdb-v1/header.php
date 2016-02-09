@@ -47,30 +47,40 @@ if(is_page()) {
 
 ?>
 <body <?php body_class( $body_class_arg ); ?>>
-<?php $picker = dttheme_option("general","disable-picker");
-	if(!isset($picker) && !is_user_logged_in() ):	dttheme_color_picker();	endif;?>
+<?php 
+if(!is_page_template('tpl-demopage.php')) {
+	$picker = dttheme_option("general","disable-picker");
+	if(!isset($picker) && !is_user_logged_in() ):	dttheme_color_picker();	endif;
+}
+?>
 <!-- **Wrapper** -->
 <div class="wrapper">
     <!-- **Inner Wrapper** -->
     <div class="inner-wrapper">
     
-        <!-- Header Wrapper -->
-        <div id="header-wrapper"><?php
-        	if( is_page_template('tpl-header1.php') ) {
-		  		$header = "header1";
-		  	}elseif( is_page_template('tpl-header2.php') ){
-		  		$header = "header2";
-	  		}elseif( is_page_template('tpl-header3.php') ){
-		  		$header = "header3";
-	  		}elseif( is_page_template('tpl-header4.php') ){
-		  		$header = "header4";
-			}else{
-		  		$header = dttheme_option("appearance","header_type");
-		  		$header = !empty($header) ? $header : "header1";
-		  	}
-
-		  	require_once(IAMD_TD."/framework/headers/{$header}.php"); ?>
-        </div><!-- Header Wrapper -->
+    	<?php
+		if(!is_page_template('tpl-demopage.php')) {
+			?>
+            <!-- Header Wrapper -->
+            <div id="header-wrapper"><?php
+                if( is_page_template('tpl-header1.php') ) {
+                    $header = "header1";
+                }elseif( is_page_template('tpl-header2.php') ){
+                    $header = "header2";
+                }elseif( is_page_template('tpl-header3.php') ){
+                    $header = "header3";
+                }elseif( is_page_template('tpl-header4.php') ){
+                    $header = "header4";
+                }else{
+                    $header = dttheme_option("appearance","header_type");
+                    $header = !empty($header) ? $header : "header1";
+                }
+    
+                require_once(IAMD_TD."/framework/headers/{$header}.php"); ?>
+            </div><!-- Header Wrapper -->
+            <?php
+            }
+		?>
     
         <!-- **Main** -->
         <div id="main">
@@ -85,10 +95,14 @@ if(is_page()) {
             endif; ?>
 
         <!-- Sub Title Section -->
-        <?php require_once( IAMD_TD."/framework/sub-title.php"); ?>
+        <?php 
+		if(!is_page_template('tpl-demopage.php')) {
+			require_once( IAMD_TD."/framework/sub-title.php"); 
+		}
+		?>
         <!-- Sub Title Section -->   
 
-<?php if( !is_page_template( 'tpl-fullwidth.php' ) && !is_page_template('tpl-landingpage.php') ):?>
+<?php if( !is_page_template( 'tpl-fullwidth.php' ) && !is_page_template('tpl-landingpage.php') && !is_page_template('tpl-demopage.php') ):?>
     <!-- ** Container ** -->
    	<div class="container">
 <?php endif; ?>   	

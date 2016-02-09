@@ -19,6 +19,7 @@
 		<custom-field action="translate">multiline-answer</custom-field>
 		<custom-field action="translate">answer-explanation</custom-field>
 		<custom-field action="translate">assignment-subtitle</custom-field>
+		<custom-field action="copy">_dt_builder_settings</custom-field>
     </custom-fields>
 	
     <custom-types>

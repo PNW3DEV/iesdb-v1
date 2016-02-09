@@ -120,6 +120,12 @@
                                                                 
                                     echo '<li><a href="'.wp_logout_url(get_permalink()).'" title="'.__('Logout', 'dt_themes').'">'.__('Logout', 'dt_themes').'</a></li>';
                                 endif;
+								
+								if(class_exists('WooCommerce') && dttheme_option('appearance', 'enable-header-cart')) {
+									global $woocommerce;
+									$cart_url = $woocommerce->cart->get_cart_url();
+									echo '<li class="dt-sc-cart"><a href="'.$cart_url.'"><i class="fa fa-shopping-cart"></i></a></li>';
+								}
                                 ?>
                             </ul>
                         </div>

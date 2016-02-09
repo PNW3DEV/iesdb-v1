@@ -41,8 +41,6 @@ var mythemeAdmin = {
     
     mythemeAdmin.themeLayoutChooser();
     
-    mythemeAdmin.importData();
-    
     mythemeAdmin.sliderSelection();
     
     mythemeAdmin.fontSelection();
@@ -69,6 +67,8 @@ var mythemeAdmin = {
 	mythemeAdmin.backupOption();
 	mythemeAdmin.restoreOption();
 	mythemeAdmin.importOption();
+	
+	mythemeAdmin.importData();
 	
   },// init() End
   
@@ -379,7 +379,7 @@ var mythemeAdmin = {
 
   menuSort: function(){
     "use strict";
-    jQuery(".menu-to-edit").sortable({placeholder: 'sortable-placeholder'});
+    jQuery(".menu-to-edit:not(.disable-sorting)").sortable({placeholder: 'sortable-placeholder'});
   },//menuSort
   
   adminOptionSave: function(){
@@ -533,66 +533,112 @@ var mythemeAdmin = {
   
   importData:function(){
     "use strict";
-    jQuery("a.mytheme-import-button").bind('click',function(e){
-     
-      if(jQuery(this).hasClass('import-disabled')) {
-        
-         var popup = jQuery('#bpanel-message');
-		  popup.text(objectL10n.disableImportMsg);
-		  
-		  popup.fadeIn();
-		  window.setTimeout(function(){ 
-			popup.fadeOut();
-		  }, 2000);
+	
+	var importer = jQuery('.dttheme-import');
+	
+	
+	// disable submit button
+	jQuery("a.dttheme-import-button").addClass('import-disabled');
+	
+	jQuery('select.demo', importer).val('');
 
-        
-      } else {
-        if(confirm(objectL10n.importConfirm)){
+	jQuery('select.demo', importer).change(function(){
+		
+		var val = jQuery(this).val();
+
+		// submit button
+		if( val ){
+			jQuery("a.dttheme-import-button", importer).removeClass("import-disabled");
+		} else {
+			jQuery("a.dttheme-import-button", importer).addClass("import-disabled");
+		}
 			
-          var $dummy =  'lms-dummy'; // replace this line with bellow line and enable the line no : 336
-          //$dummy = jQuery("#j-current-theme-container").attr('dummy-content');
-          
-          jQuery.ajax({
-            type:"POST",
-            url:ajaxurl,
-            data:{action:'dttheme_ajax_import_data', 'dummy-data':$dummy},
-            beforeSend: function(){ jQuery('#ajax-feedback').css({display:'block'}); },
-            error: function() { },
-            complete: function(response){
-              var text = response.responseText;
-              if(text.search('already exists') > -1) {
-                jQuery('#bpanel-message').empty().removeAttr('class').addClass('warning');
-                text = text.substring(text.lastIndexOf('already exists'),text.length-1);
-                text = "All post "+text;
-              }else if(text.search('XML') > -1){
-                jQuery('#bpanel-message').empty().removeAttr('class').addClass('error-msg');
-                text = text.substring(0,text.length-1);
-              }else{
-                jQuery('#bpanel-message').empty().removeAttr('class').addClass('success');
-                text = text.substring(0,text.length-1);
-              }
-              
-              var popup = jQuery('#bpanel-message');
-			  popup.append(text);
-			  
-			  popup.fadeIn();
-			  window.setTimeout(function(){ 
-				popup.fadeOut();
-				jQuery('#ajax-feedback').fadeOut();
-			  }, 2000);
+		// demo
+		if( val == 'sensei' ){
+			jQuery('.default-demo', importer).hide();
+			jQuery('.sensei-demo', importer).show();
+		} else if( val == 'default' ){
+			jQuery('.default-demo', importer).show();
+			jQuery('.sensei-demo', importer).hide();
+		} else {
+			jQuery('.default-demo', importer).hide();
+			jQuery('.sensei-demo', importer).hide();
+		}
+			
+	});
 
-			  
-            }
-            
-          });
-        }
-        
-      }
-      
-      e.preventDefault();
-    });
+	jQuery('select.import', importer).val('');
+
+	jQuery('select.import', importer).change(function(){
+		
+		var val = jQuery(this).val();
+
+		// submit button
+		if( val ){
+			jQuery("a.dttheme-import-button", importer).removeClass("import-disabled");
+		} else {
+			jQuery("a.dttheme-import-button", importer).addClass("import-disabled");
+		}
+			
+		// attachments
+		if( val == 'all'){
+			jQuery('.row-attachments', importer).show();
+		} else {
+			jQuery('.row-attachments', importer).hide();
+		}
+			
+		// content
+		if( val == 'content' ){
+			jQuery('.row-content', importer).show();
+		} else {
+			jQuery('.row-content', importer).hide();
+		}
+			
+	});
+
+	jQuery("a.dttheme-import-button").on("click", function(e){
+		if(jQuery(this).hasClass('import-disabled')) {
+			var popup = jQuery('#bpanel-message');
+			popup.html(objectL10n.disableImportMsg);
+			
+			popup.fadeIn();
+			window.setTimeout(function(){ 
+				popup.fadeOut();
+			}, 2000);
+		}else if( confirm(objectL10n.importConfirm) ){
+
+			var $data = {};
+			var $demo = jQuery('.dttheme-import select[name=demo]').val();
+			if($demo == '') $demo = 'default';
+			
+			$data['demo'] = $demo;
+			$data['import'] = jQuery('.dttheme-import .' + $demo + '-demo .import').val();
+			$data['content'] = jQuery('.dttheme-import .' + $demo + '-demo select[name=content]').val();
+			if(jQuery('.dttheme-import input[name=attachments]').attr('checked') == 'checked') $data['attachments'] = 1;
+
+			jQuery.ajax({
+				type:"POST",
+				url:ajaxurl,
+				data:{action:'dttheme_ajax_importer', 'data': $data },
+				beforeSend: function(){ jQuery('#ajax-feedback').css({display:'block'}); },
+				error: function() { },
+				complete: function(response){
+					 var text = response.responseText;
+					 var popup = jQuery('#bpanel-message');
+					 popup.html(text);
+					 popup.fadeIn();
+					 
+					 window.setTimeout(function(){ 
+					 	popup.fadeOut();
+						jQuery('#ajax-feedback').fadeOut();
+					}, 2000);
+				}
+			});
+		}
+		e.preventDefault();
+	});
   }, //importData
-  
+    
   sliderSelection: function(){
     "use strict";
     var $no_sliders_container = jQuery('#j-no-images-container'),
@@ -878,7 +924,7 @@ var mythemeAdmin = {
 					$ptemplate_box.find("#page-layout").slideUp();
 					$ptemplate_box.find("#widget-area-options").slideUp();
 				break;
-			
+				
 				case 'tpl-landingpage.php':
 					$ptemplate_box.find('span:first').text('Default Options');
 					$ptemplate_box.slideDown();
@@ -892,6 +938,7 @@ var mythemeAdmin = {
 					jQuery("#page-template-slider-meta-container").slideDown();
 				break;
 				
+				case 'tpl-demopage.php':
 				case 'tpl-blank.php':
 					jQuery("#page-template-slider-meta-container").slideUp();
 					$ptemplate_box.slideUp();

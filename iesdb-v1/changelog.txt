@@ -1,6 +1,36 @@
 *** LMS - Responsive Learning Management Theme Change log ***
 
 
+2015.01.07 - Version 2.0
+ * Supports s2Member Pro v151218
+ * Option to customize all s2member user levels from buddha panel
+ * Option to have one or more s2Member supported payment types
+ * Supports sensei addons like Sensei Certificates, Sensei Course Participants, Sensei Course Progress, Sensei Media Attachments, Sensei Share Your Grade
+ * Admin can manully assign course(s) to student
+ * Option to change the course, lesson and course type slug
+ * Updated membership page with membership template
+ * Option to remove placeholder images from blog, portfolio, courses, etc,
+ * Not able to have more than one WooCommerce widget with different settings - Fixed
+ * Theme settings removed when switching the themes - Fixed
+ * Added cart icon along with menu
+ * Added category option in 'dt_sc_events' shortcode
+ * The "Signup" button in mailchimp widget is not translatable - Fixed
+ * Page builder fix for WPML
+ * Able to download certificates without logging in - Fixed
+ * Users able to upload assignments without logging in - Fixed
+ * Option to set default sidebar for all posts, pages, courses, etc...,
+ * Enhanced dummy data installation
+ * Updated Documentation
+ * Packed with Layer Slider 5.6.2 and Revolution Slider 5.1.4
+ * BuddyPress 2.4.3 compatible
+ * s2Member Framework 151218 compatible
+ * Woothemes Sensei 1.8.8 compatible
+ * The Events Calendar 4.0.4 compatible
+ * WooCommerce 2.4.12 compatible
+ * Updated fontawesome icons and tgm plugin activation scripts
+ * Demo URL have been changed to http://wedesignthemes.com/themes/lms/, http://wedesignthemes.com/themes/lms/sensei/
+
+
 2015.11.12 - Version 1.9
  * Updated documentation
 

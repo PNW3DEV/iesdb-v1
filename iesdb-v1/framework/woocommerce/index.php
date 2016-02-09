@@ -497,4 +497,31 @@ if ( version_compare( get_option('woocommerce_version'), "2.1" ) >= 0 ) {
 				$out .= '<span class="featured-product">'.__('Featured','dt_themes').'</span>';
 			echo $out;
 		}
-	}?>
+	}
+	
+//	WooCommerce - Ensure cart contents updated when products are added to the cart via AJAX
+global $woocommerce;
+if( version_compare( $woocommerce->version, '2.3', '<' ) ){
+	add_filter('add_to_cart_fragments', 'dttheme_header_add_to_cart_fragment'); // WooCommerce 2.2 -
+} else {
+	add_filter('woocommerce_add_to_cart_fragments', 'dttheme_header_add_to_cart_fragment'); // WooCommerce 2.3 +
+}
+
+function dttheme_header_add_to_cart_fragment( $fragments ) {
+	global $woocommerce;
+	
+	ob_start();
+	
+	$cart_url = $woocommerce->cart->get_cart_url();
+	$woo_cart_list = WC()->cart->get_cart();
+	$out = '<li class="dt-sc-cart">
+				<a href="'.$cart_url.'"><i class="fa fa-shopping-cart"></i><span class="cart-count">'.count($woo_cart_list).'</span></a>
+			</li>';
+	
+	echo dttheme_wp_kses($out);
+	$fragments['li.dt-sc-cart'] = ob_get_clean();
+	
+	return $fragments;
+}
+	
+?>

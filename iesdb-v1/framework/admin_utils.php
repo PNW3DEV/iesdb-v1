@@ -3,22 +3,24 @@
  * Objective:
  *		To get my theme options stored in database by the thme option page at back end.
  **/
-function dttheme_option($key1, $key2 = '') {
-	$options = get_option ( IAMD_THEME_SETTINGS );
-	$output = NULL;
-
-	if (is_array ( $options )) {
-
-		if (array_key_exists ( $key1, $options )) {
-			$output = $options [$key1];
-			if (is_array ( $output ) && ! empty ( $key2 )) {
-				$output = (array_key_exists ( $key2, $output ) && (! empty ( $output [$key2] ))) ? $output [$key2] : NULL;
+if( !function_exists( 'dttheme_option' ) ){ 
+	function dttheme_option($key1, $key2 = '') {
+		$options = get_option ( IAMD_THEME_SETTINGS );
+		$output = NULL;
+	
+		if (is_array ( $options )) {
+	
+			if (array_key_exists ( $key1, $options )) {
+				$output = $options [$key1];
+				if (is_array ( $output ) && ! empty ( $key2 )) {
+					$output = (array_key_exists ( $key2, $output ) && (! empty ( $output [$key2] ))) ? $output [$key2] : NULL;
+				}
+			} else {
+				$output = $output;
 			}
-		} else {
-			$output = $output;
 		}
+		return $output;
 	}
-	return $output;
 }
 // # --- **** dttheme_option() *** --- ###
 
@@ -37,6 +39,7 @@ function dttheme_default_option() {
 				"enable-sticky-nav"	=>"true",
 				"enable-landingpage-sticky-nav"	=>"true",
 				"show-sociables" => "on",
+				"global-page-layout" => "content-full-width",
 				"show-footer" => "on",
 				"footer-columns" => "4",
 				"show-copyrighttext" => "on",

@@ -210,6 +210,7 @@ jQuery(document).ready(function($){
 	
 	$("div.dt-video-wrap").fitVids();
 	$("div.course-video").fitVids();
+	$("div.lesson-video").fitVids();
 	
 
 	$("select").each(function(){

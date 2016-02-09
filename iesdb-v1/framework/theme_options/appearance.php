@@ -36,6 +36,15 @@
                          </ul>
                          <input id="mytheme[appearance][header_type]" name="mytheme[appearance][header_type]" type="hidden" value="<?php echo  dttheme_option('appearance','header_type');?>"/>                         
                     </div>
+                    
+                    <div class="clear"> </div>
+                    <div class="hr"> </div>
+                    
+                    <div class="bpanel-option-set">
+                    	<h6><?php _e('Enable Cart Icon','dt_themes');?></h6>
+                        <?php dttheme_switch("",'appearance','enable-header-cart');?>
+                        <p class="note"> <?php _e('Enable or Disable cart icon for header.','dt_themes');?>  </p>                        
+                    </div>
                 </div>
             </div>
         </div><!-- Header Section End -->

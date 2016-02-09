@@ -123,22 +123,12 @@
 
 }
 
-if (!function_exists('dttheme_activation_function')) {
-	function dttheme_activation_function($oldname, $oldtheme=false) {
-		if(!in_array($oldname, array('LMS', 'LMS Child'))) {
-			update_option(IAMD_THEME_SETTINGS, dttheme_default_option());
-		}
-	}
-	add_action("after_switch_theme", "dttheme_activation_function", 10 , 2);
-}
-
 if (!function_exists('dt_theme_navigation_menus')) {
 
 	// Register Navigation Menus
 	function dt_theme_navigation_menus() {
 		$locations = array(
 			'header_menu' => __('Header Menu', 'dt_themes'),
-			'footer_menu' => __('Footer Menu', 'dt_themes'),
 			'landingpage_menu' => __('Landing Page Menu', 'dt_themes')
 		);
 		register_nav_menus($locations);

@@ -399,7 +399,7 @@
         	<h6>Colored Box</h6>
             
             <pre>
-                [dt_sc_icon_box_colored fontawesome_icon='trophy' title='Well Trained Professionals' bgcolor='#333334' ]
+                [dt_sc_icon_box_colored fontawesome_icon='trophy' stroke_icon="" title='Well Trained Professionals' bgcolor='#333334' ]
                     Nunc at pretium est curabitur commodo leac est venenatis egestas sed aliquet auguevelit.
                     [dt_sc_button link="#" size="small" target="_blank"]Know More[/dt_sc_button]
                 [/dt_sc_icon_box_colored]
@@ -417,6 +417,12 @@
                 <td>&nbsp;</td>
                 <td>fontawesome_icon</td>
                 <td>fontawesome_icon="trophy"</td>
+              </tr>
+              <tr>
+                <td>Stroke Icon</td>
+                <td>&nbsp;</td>
+                <td>stroke_icon</td>
+                <td>stroke_icon=""</td>
               </tr>
               <tr>
                 <td>Title</td>
@@ -774,7 +780,7 @@
             <pre>
                 [dt_sc_fullwidth_section backgroundcolor="#545454" backgroundimage="http://placehold.it/100" opacity="0.5" parallax="yes" 
                 backgroundrepeat="no-repeat" backgroundposition="left top" paddingtop="20" paddingbottom="20" textcolor="#dd9933" 
-                class="extra"]
+                disable_container="false" class="extra"]
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras cursus sollicitudin nunc nec rhoncus.
                 [/dt_sc_fullwidth_section]
             </pre>
@@ -839,6 +845,12 @@
                 <td>&nbsp;</td>
                 <td>textcolor</td>
                 <td>textcolor="#dd9933"</td>
+              </tr>
+              <tr>
+                <td>Disable Container</td>
+                <td>false,true</td>
+                <td>parallax</td>
+                <td>parallax="true"</td>
               </tr>
               <tr>
                 <td>CSS Class</td>
@@ -1750,7 +1762,7 @@
         <li> 
         	<h6> Testimonial </h6>
             <pre>
-                [dt_sc_testimonial name="John Doe" role="Cambridge Telcecom" type="type2" class=""]
+                [dt_sc_testimonial name="John Doe" role="Cambridge Telcecom" type="type2" enable_rating="false" class=""]
                 	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi hendrerit elit turpis, a porttitor tellus sollicitudin at.
                 [/dt_sc_testimonial]
             </pre>
@@ -1775,9 +1787,15 @@
               </tr>
               <tr>
                 <td>Type</td>
-                <td>type1,type2</td>
+                <td>type1,type2,type3</td>
                 <td>type</td>
                 <td>type="type2"</td>
+              </tr>
+              <tr>
+                <td>Enable Rating</td>
+                <td>false,true (This options is applicable only for type3.</td>
+                <td>enable_rating</td>
+                <td>enable_rating="false"</td>
               </tr>
               <tr>
                 <td>Class</td>

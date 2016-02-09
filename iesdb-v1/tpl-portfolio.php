@@ -4,7 +4,11 @@
 	$tpl_default_settings = get_post_meta( $post->ID, '_tpl_default_settings', TRUE );
 	$tpl_default_settings = is_array( $tpl_default_settings ) ? $tpl_default_settings  : array();
 
-	$page_layout  = array_key_exists( "layout", $tpl_default_settings ) ? $tpl_default_settings['layout'] : "content-full-width";
+	if($GLOBALS['force_enable'] == true)
+		$page_layout = $GLOBALS['page_layout'];
+	else
+		$page_layout  = array_key_exists( "layout", $tpl_default_settings ) ? $tpl_default_settings['layout'] : "content-full-width";
+
 	$show_sidebar = $show_left_sidebar = $show_right_sidebar =  false;
 	$sidebar_class = $thumbnail_sidebar = $post_thumbnail = "";
 
@@ -37,6 +41,8 @@
 		break;
 	}
 
+	$pholder = dttheme_option('general', 'disable-placeholder-images');
+	
 	if ( $show_sidebar ):
 		if ( $show_left_sidebar ): ?>
 			<!-- Secondary Left -->
@@ -165,7 +171,7 @@
                         					$items = array_diff( $portfolio_item_meta['items_name'] , array("video") );
                         					if( !empty($items) ) {
                         						echo "<img src='".$portfolio_item_meta['items'][key($items)]."' width='1170' height='878' alt='' />";	
-                        					} else {
+                        					} elseif($pholder != 'on') {
                         						echo '<img src="http://placehold.it/1170x878&text=Add%20Image%20/%20Video%20%20to%20Portfolio" width="1170" height="878" alt="" />';
                         					}
                         				} else {
@@ -173,7 +179,7 @@
 											$img_attributes = wp_get_attachment_image_src($attachment_id, $post_thumbnail);
 											echo "<img src='".$img_attributes[0]."' width='".$img_attributes[1]."' height='".$img_attributes[2]."' />";
                         				}
-                        			} else {
+                        			} elseif($pholder != 'on') {
                         				echo "<img src='{$popup}' alt='' />";
                         			}?>
                                 <div class="image-overlay"> 

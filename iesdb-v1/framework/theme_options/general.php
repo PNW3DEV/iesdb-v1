@@ -6,6 +6,7 @@
         <ul class="sub-panel"> 
             <li><a href="#my-general"><?php _e("General",'dt_themes');?></a></li>
             <li><a href="#my-sociable"><?php _e("Sociable",'dt_themes');?></a></li>
+            <li><a href="#my-global"><?php _e("Global",'dt_themes');?></a></li>
         </ul>
         
         <!-- #my-general-->
@@ -432,17 +433,6 @@
                       <div class="hr"></div>
                       <!-- Disable placeholder images -->
 
-                      <h6><?php _e('Disable import dummy content','dt_themes');?></h6>
-                      <div class="column one-fifth">
-                      	<?php $switchclass = ( "on" ==  dttheme_option('general','disable-import') ) ? 'checkbox-switch-on' :'checkbox-switch-off'; ?>
-                        <div data-for="mytheme-global-import-disable" class="checkbox-switch <?php echo $switchclass;?>"></div>
-                        	<input class="hidden" id="mytheme-global-import-disable" name="mytheme[general][disable-import]" type="checkbox"  <?php checked(dttheme_option('general','disable-import'),'on');?>/>                      </div>
-                            
-                      <div class="column four-fifth last">
-                      	<p class="note"><?php _e('YES! to hide Import Dummy Data button from the Adminpanel','dt_themes');?> </p>
-                      </div>
-                      <div class="hr"></div>
-
                       <h6><?php _e('Phone Number','dt_themes');?></h6>
                       <div class="column one-half">
                         <input id="mytheme-google-font-subset" name="mytheme[general][h4-phoneno]" type="text" value="<?php echo dttheme_option('general','h4-phoneno');?>"/>
@@ -549,9 +539,8 @@
                     </div>
                     
                     <div class="bpanel-option-set">
-                        <ul class="menu-to-edit">
+                        <ul class="menu-to-edit disable-sorting">
                         <?php $socials = dttheme_option('social');
-						
         						      if(is_array($socials)): 
         							  	$keys = array_keys($socials);
 
@@ -618,9 +607,42 @@
                         
                     </div>
                 </div> <!-- .box-content -->    
-                
-                
             </div><!-- .bpanel-box end -->
         </div><!--#my-sociable end-->
+        
+       
+        <!-- #my-global-->
+        <div id="my-global" class="tab-content">
+            <div class="bpanel-box">
+                <div class="box-title">
+                	<h3><?php _e('Global Settings','dt_themes');?></h3>
+                </div>
+                <div class="box-content">
+                
+                    <div class="bpanel-option-set">
+                        <h6><?php _e('Force to Enable Global Page Layout','dt_themes');?></h6>
+                        <?php dttheme_switch("",'general','force-enable-global-layout');?>
+                        <p class="note"> <?php _e('Enable or Disable global page layout ("Disaplay Everywhere" sidebar) for all pages, posts, archive pages.','dt_themes');?>  </p>
+                    </div>
+                    <div class="clear"> </div>
+                    <div class="hr"> </div>
+                
+                    <div class="bpanel-option-set">
+                        <ul class="bpanel-post-layout bpanel-layout-set" id="dt-global-page">
+                        <?php $layout = array('content-full-width'=>'without-sidebar','with-left-sidebar'=>'left-sidebar','with-right-sidebar'=>'right-sidebar','both-sidebar'=>'both-sidebar');
+                        foreach($layout as $key => $value):
+                            $class = ( $key ==  dttheme_option('general',"global-page-layout")) ? " class='selected' " : "";
+                            echo "<li><a href='#' rel='{$key}' {$class}><img src='".IAMD_FW_URL."theme_options/images/columns/{$value}.png' /></a></li>";
+                        endforeach; ?>
+                        </ul>
+                        <input id="mytheme[general][global-page-layout]" name="mytheme[general][global-page-layout]" type="hidden" value="<?php echo dttheme_option('general',"global-page-layout");?>"/>
+                    </div>
+                        
+                </div> 
+            </div>
+        </div>
+        <!--#my-global end-->
+        
+        
    </div><!-- .bpanel-main-content end-->
 </div><!-- #general end

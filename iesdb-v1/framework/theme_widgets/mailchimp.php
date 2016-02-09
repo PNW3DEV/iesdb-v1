@@ -91,7 +91,7 @@ class MY_Mailchimp extends WP_Widget {
 		echo '<form method="post" class="mailchimp-form">';
 		echo '	<input type="email" placeholder="'.__('Enter Email Address','dt_themes').'" name="mythem_mc_emailid" value="" required/>';
 		echo "	<input type='hidden' name='mythem_mc_listid' value='$list_id' />";
-		echo '	<input type="submit" name="submit" class="nl-submit" value="Signup" />';
+		echo '	<input type="submit" name="submit" class="nl-submit" value="'.esc_html__('Signup', 'dt_themes').'" />';
 		echo '</form>';
 
 		if ( isset ( $msg ) ) echo '<span class="zn_mailchimp_result">'.$msg.'</span>';

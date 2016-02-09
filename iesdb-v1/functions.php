@@ -4,6 +4,7 @@ define('IAMD_FW',get_template_directory().'/framework/');
 define('IAMD_TD',get_template_directory());
 define('IAMD_IMPORTER_URL',IAMD_FW.'wordpress-importer/');
 define('IAMD_THEME_SETTINGS', 'mytheme');
+define('IAMD_THEME_URI', get_template_directory_uri());
 define('IAMD_SAMPLE_FONT', __('The quick brown fox jumps over the lazy dog','dt_themes') );
 
 $user_id = get_current_user_id();
@@ -11,8 +12,9 @@ if($user_id > 0) {
 	$user_info = get_userdata($user_id);
 	foreach($user_info -> roles as $role) {	$user_role = $role; }
 	define('IAMD_USER_ROLE', strtolower($user_role));
+} else {
+	define('IAMD_USER_ROLE', '');
 }
-
 
 /* Define IAMD_THEME_NAME
  * Objective:	
@@ -28,4 +30,8 @@ endif;
 
 #ALL BACKEND DETAILS WILL BE IN include.php
 require_once (get_template_directory () . '/framework/include.php');
-if ( ! isset( $content_width ) ) $content_width = 1170;?>
+if ( ! isset( $content_width ) ) $content_width = 1170;
+
+$GLOBALS['force_enable'] = dttheme_option('general', 'force-enable-global-layout');
+$GLOBALS['page_layout'] = dttheme_option('general', 'global-page-layout');
+?>

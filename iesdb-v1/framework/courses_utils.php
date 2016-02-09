@@ -23,7 +23,10 @@ if($course_page_type == 'archive' || $course_page_type == 'tax-archive') {
 	$post_layout  = array_key_exists( "courses-post-layout", $tpl_default_settings ) ? $tpl_default_settings['courses-post-layout'] : "one-half-column";
 	$post_per_page	=	isset($tpl_default_settings['courses-post-per-page']) ? $tpl_default_settings['courses-post-per-page'] : -1;
 	
-	$page_layout  = array_key_exists( "layout", $tpl_default_settings ) ? $tpl_default_settings['layout'] : "content-full-width";
+	if($GLOBALS['force_enable'] == true)
+		$page_layout = $GLOBALS['page_layout'];
+	else
+		$page_layout  = array_key_exists( "layout", $tpl_default_settings ) ? $tpl_default_settings['layout'] : "content-full-width";
 
 }
 

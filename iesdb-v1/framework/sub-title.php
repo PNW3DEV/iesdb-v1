@@ -23,6 +23,9 @@
     elseif( is_post_type_archive('course') ):
 		$title = __("Course Archives",'dt_themes');
 		dttheme_custom_subtitle_section( $title, "courses-bg");
+    elseif( is_post_type_archive('sensei_message') ):
+		$title = __("Message Archives",'dt_themes');
+		dttheme_custom_subtitle_section( $title, "courses-bg");
     elseif( is_post_type_archive('dt_courses') ):
 		$title = __("Course Archives",'dt_themes');
 		dttheme_custom_subtitle_section( $title, "courses-bg");

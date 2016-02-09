@@ -6,12 +6,19 @@ if($pageid > 0) {
 	$tpl_default_settings = get_post_meta( $pageid, '_tpl_default_settings', TRUE );
 	$tpl_default_settings = is_array( $tpl_default_settings ) ? $tpl_default_settings  : array();
 
-	$page_layout  = array_key_exists( "layout", $tpl_default_settings ) ? $tpl_default_settings['layout'] : "content-full-width";
+	if($GLOBALS['force_enable'] == true)
+		$page_layout = $GLOBALS['page_layout'];
+	else
+		$page_layout  = array_key_exists( "layout", $tpl_default_settings ) ? $tpl_default_settings['layout'] : "content-full-width";
 
 } else {
 	
 	$page_layout 	= dttheme_option('specialty','post-archives-layout');
-	$page_layout 	= !empty($page_layout) ? $page_layout : "content-full-width";
+	
+	if($GLOBALS['force_enable'] == true)
+		$page_layout = $GLOBALS['page_layout'];
+	else
+		$page_layout = !empty($page_layout) ? $page_layout : "content-full-width";
 
 }
 

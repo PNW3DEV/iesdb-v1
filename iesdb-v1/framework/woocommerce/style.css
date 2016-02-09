@@ -1705,6 +1705,8 @@ dl.customer_details { margin:0px; }
 .widget.woocommerce .amount, .widget.woocommerce .reviewer { line-height:27px; }
 
 .chosen-container-single .chosen-single span { color:#868686; }
+.return-to-shop .wc-backward { padding:0; }
+.return-to-shop .wc-backward::before { content:"\e02f"; font-family: WooCommerce; font-size: 0.75em; font-variant: normal; font-weight: 400; line-height: 1; margin-right: 7px; text-transform: none; }
 
 h3#ship-to-different-address label { color:#303030; }
 

@@ -1,7 +1,12 @@
 <?php get_header();
 
 	$page_layout 	= dttheme_option('specialty','post-archives-layout');
-  	$page_layout 	= !empty($page_layout) ? $page_layout : "content-full-width";
+	
+	if($GLOBALS['force_enable'] == true)
+		$page_layout = dttheme_option('general', 'global-page-layout');
+	else
+		$page_layout = !empty($page_layout) ? $page_layout : "content-full-width";
+  
 	$show_sidebar = $show_left_sidebar = $show_right_sidebar =  false;
 	$sidebar_class = $thumbnail_sidebar = $post_thumbnail = "";
 

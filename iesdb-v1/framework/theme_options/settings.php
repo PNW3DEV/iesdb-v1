@@ -51,6 +51,7 @@ function dttheme_options_page(){ ?>
 									array('id'=>'pagebuilder', 'name'=>__('Page Builder','dt_themes')),
 									array('id'=>'mobile', 'name'=>__('Responsive &amp; Mobile','dt_themes')),
 									array('id'=>'branding', 'name'=>__('Branding','dt_themes')),
+									array('id'=>'importer', 'name'=>__('Importer','dt_themes')),
 									array('id'=>'backup', 'name'=>__('Backup','dt_themes'))
 								);
 							  else:
@@ -69,6 +70,7 @@ function dttheme_options_page(){ ?>
 									array('id'=>'pagebuilder', 'name'=>__('Page Builder','dt_themes')),
 									array('id'=>'mobile', 'name'=>__('Responsive &amp; Mobile','dt_themes')),
 									array('id'=>'branding', 'name'=>__('Branding','dt_themes')),
+									array('id'=>'importer', 'name'=>__('Importer','dt_themes')),
 									array('id'=>'backup', 'name'=>__('Backup','dt_themes')),
 								);
 							  endif;
@@ -85,10 +87,6 @@ function dttheme_options_page(){ ?>
 		                <?php settings_fields(IAMD_THEME_SETTINGS);?>
                         <input type="hidden" id="mytheme-full-submit" name="mytheme-full-submit" value="0" />
                         <input type="hidden" name="mytheme_admin_wpnonce" value="<?php echo wp_create_nonce(IAMD_THEME_SETTINGS.'_wpnonce');?>" />
-                        <div class="top-links">
-                            <?php  $import_disable = (dttheme_option('general','disable-import') == "on") ? "import-disabled" :""; ?>                        
-	                        <a class="mytheme-import-button bpanel-button blue-btn <?php echo $import_disable;?>"><?php _e('Import Dummy Data','dt_themes');?></a>
-                        </div>
                         
                     	<?php require_once(IAMD_TD.'/framework/theme_options/general.php');?>
                         <?php require_once(IAMD_TD.'/framework/theme_options/appearance.php');?>
@@ -109,6 +107,7 @@ function dttheme_options_page(){ ?>
 							  	require_once(IAMD_TD.'/framework/theme_options/seo.php');
 							  endif;
 							  ?>
+                        <?php require_once(IAMD_TD.'/framework/theme_options/importer.php');?>
                         <?php require_once(IAMD_TD.'/framework/theme_options/backup.php');?>
 						<!-- #bpanel-bottom -->
                         <div id="bpanel-bottom">

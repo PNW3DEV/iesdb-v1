@@ -67,6 +67,7 @@ function plugin_head_styles_scripts() {
 	$landingpagestickynav = ( dttheme_option("general","enable-landingpage-sticky-nav") ) ? "enable" : "disable";
 	$isResponsive = dttheme_option ( "mobile", "is-theme-responsive" ) ? "enable" : "disable";
 	$retina_support = ( dttheme_option("general","enable-retina") ) ? "enable" : "disable";
+	$theme_folder_name = ( IAMD_THEME_FOLDER_NAME != '') ? IAMD_THEME_FOLDER_NAME : '';
 	
 	if(is_rtl()) $rtl = true; else $rtl = false;
 	
@@ -92,6 +93,7 @@ function plugin_head_styles_scripts() {
 	if(defined('ICL_LANGUAGE_CODE')) echo "\n \t\t,lang:'".ICL_LANGUAGE_CODE."'";
 	echo "\n \t\t,isResponsive:'{$isResponsive}'";
 	echo "\n \t\t,layout_pattern:'".dttheme_option('appearance','boxed-layout-pattern')."'";
+	echo "\n \t\t,themeName:'".$theme_folder_name."'";
 	echo "\n\t};\n";
 	echo " </script>\n";
 	
@@ -1128,6 +1130,10 @@ class dttheme_breadcrumb {
 			return __('Courses','dt_themes');
 		}
 
+		if(is_post_type_archive('sensei_message')){
+			return __('Messages','dt_themes');
+		}
+
 		if(is_post_type_archive('dt_courses')){
 			return __('Courses','dt_themes');
 		}
@@ -1587,4 +1593,54 @@ function dttheme_wp_kses($content) {
 	global $dt_allowed_html_tags;
 	$data = wp_kses($content, $dt_allowed_html_tags);
 	return $data;
+}
+
+
+// Ajax Payments
+add_action( 'wp_ajax_dt_ajax_payaments', 'dt_ajax_payaments' );
+add_action( 'wp_ajax_nopriv_dt_ajax_payaments', 'dt_ajax_payaments' );
+function dt_ajax_payaments() {
+	
+	$paymenttype = $_REQUEST['paymenttype'];
+	$level = $_REQUEST['level'];
+	$description = $_REQUEST['description'];
+	$currency = $_REQUEST['currency'];
+	$price = $_REQUEST['price'];
+	$period = $_REQUEST['period'];
+	$term = $_REQUEST['term'];
+	$cbproductno = $_REQUEST['cbproductno'];
+	$cbskin = $_REQUEST['cbskin'];
+	$cbflowid = $_REQUEST['cbflowid'];
+	
+	$payment_url = '';
+	
+	if($paymenttype == 'stripe') {
+		
+		$payment_url = do_shortcode('[s2Member-Pro-Stripe-Form level="'.$level.'" desc="'.$description.'" cc="'.$currency.'" custom="'.$_SERVER["HTTP_HOST"].'" ra="'.$price.'" rp="'.$period.'" rt="'.$term.'" rr="BN" /]');
+		
+	} else if($paymenttype == 'authnet') {
+		
+		$payment_url = do_shortcode('[s2Member-Pro-AuthNet-Form level="'.$level.'" desc="'.$description.'" cc="'.$currency.'" custom="'.$_SERVER["HTTP_HOST"].'" ra="'.$price.'" rp="'.$period.'" rt="'.$term.'" rr="BN" /]');
+		
+	} else if($paymenttype == 'clickbank') {
+		
+		$cb_productno = dttheme_option('dt_course','s2member-cb-productno');
+		$cb_skin = dttheme_option('dt_course','s2member-cb-skin');
+		$cb_flowid = dttheme_option('dt_course','s2member-cb-flowid');
+		
+		$payment_url = do_shortcode('[s2Member-Pro-ClickBank-Button cbp="'.$cb_productno.'" cbskin="'.$cb_skin.'" cbfid="'.$cb_flowid.'" cbur="" cbf="auto" level="'.$level.'" desc="'.$description.'" custom="'.$_SERVER["HTTP_HOST"].'" rp="'.$period.'" rt="'.$term.'" rr="0" image="default" output="anchor" /]');
+		
+	} else if($paymenttype == 'paypal') {
+		
+		$payment_url = do_shortcode('[s2Member-Pro-PayPal-Form level="'.$level.'" desc="'.$description.'" ps="paypal" lc="" cc="'.$currency.'" dg="0" ns="1" custom="'.$_SERVER["HTTP_HOST"].'" ra="'.$price.'" rp="'.$period.'" rt="'.$term.'" rr="BN" rrt="" rra="2" image="" output="url"/]');
+	
+	} else if($paymenttype == 'paypal-default') {
+		
+		$payment_url = do_shortcode('[s2Member-PayPal-Button level="'.$level.'" desc="'.$description.'" ps="paypal" lc="" cc="'.$currency.'" dg="0" ns="1" custom="'.$_SERVER["HTTP_HOST"].'" ra="'.$price.'" rp="'.$period.'" rt="'.$term.'" rr="BN" rrt="" rra="1" image="" output="url"/]');
+		
+	}
+	
+	echo ($payment_url != '') ? $payment_url : '';
+	die();
+	
 }
