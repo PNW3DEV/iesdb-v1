@@ -26,7 +26,7 @@ if(isset($searchtext))
 	$searchtext = $searchtext;
 else
 	$searchtext = '';
-	
+
 $tax_query = $meta_query = array();
 if( !empty( $coursetype) && $coursetype > 0 ) {
 	$tax_query[] = array( 'taxonomy' => 'course_category',
@@ -42,23 +42,23 @@ if( !empty($subcoursetype) && $subcoursetype > 0 ) {
 }
 
 if($costtype == 'paid') {
-	
+
 	$meta_query[] = array(
 					'key'     => 'starting-price',
 					'value'   => 0,
 					'type'    => 'numeric',
 					'compare' => '>'
 					);
-					
+
 } else if($costtype == 'free') {
-	
+
 	$meta_query[] = array(
 					'key'     => 'starting-price',
 					'compare' => 'NOT EXISTS'
 					);
-					
+
 }
-	
+
 if( isset($webinar) && $webinar == 'on' ) {
 	$meta_query[] = array( 'key' => 'course-video', 'compare' => 'EXISTS');
 }
@@ -95,26 +95,26 @@ if( $wp_query->have_posts() ):
 			  </tr>
 			</thead>
 			<tbody>';
-		  
+
 	while( $wp_query->have_posts() ):
-	
+
 		$wp_query->the_post();
 
 		$the_id = get_the_ID();
 		$permalink = get_permalink($the_id);
 		$title = get_the_title($the_id);
-		
+
 		$terms = get_the_terms($the_id,'course_category');
 		$course_terms = array();
-		foreach ( $terms as $term ) {
+		foreach( $terms as $term ) {
 			$course_terms[] = '<a href="'.get_term_link( $term->slug, 'course_category' ).'">'.$term->name.'</a>';
 		}
 		$course_terms = join( ", ", $course_terms );
-			
-			
+
+
 		$lesson_args = array('post_type' => 'dt_lessons', 'posts_per_page' => -1, 'meta_key' => 'dt_lesson_course', 'meta_value' => $the_id );
 		$lessons_array = get_posts( $lesson_args );
-		
+
 		$duration = 0;
 		$count = count($lessons_array);
 		foreach($lessons_array as $lesson) {
@@ -123,33 +123,33 @@ if( $wp_query->have_posts() ):
 				$duration = $duration + $lesson_data[0]['lesson-duration'];
 			}
 		}
-		
+
 		if($duration > 0) {
-			$hours = floor($duration/60); 
-			$mins = $duration % 60; 
-			
+			$hours = floor($duration/60);
+			$mins = $duration % 60;
+
 			if($hours == 0) {
-				$duration = $mins . __(' mins ', 'dt_themes'); 				
+				$duration = $mins . __(' mins ', 'dt_themes');
 			} elseif($hours == 1) {
-				$duration = $hours .  __(' hour ', 'dt_themes') . $mins . __(' mins ', 'dt_themes'); 				
+				$duration = $hours .  __(' hour ', 'dt_themes') . $mins . __(' mins ', 'dt_themes');
 			} else {
-				$duration = $hours . __(' hours ', 'dt_themes') . $mins . __(' mins ', 'dt_themes'); 				
+				$duration = $hours . __(' hours ', 'dt_themes') . $mins . __(' mins ', 'dt_themes');
 			}
 		} else {
 			$duration = '';
 		}
 
 		$starting_price = dttheme_wp_kses(get_post_meta(get_the_ID(), 'starting-price', true));
-		if($starting_price != ''): 
-			if(dttheme_option('dt_course','currency-position') == 'after-price') 
-				$cost =  $starting_price.dttheme_wp_kses(dttheme_option('dt_course','currency')); 
+		if($starting_price != ''):
+			if(dttheme_option('dt_course','currency-position') == 'after-price')
+				$cost =  $starting_price.dttheme_wp_kses(dttheme_option('dt_course','currency'));
 			else
-				$cost = dttheme_wp_kses(dttheme_option('dt_course','currency')).$starting_price; 
+				$cost = dttheme_wp_kses(dttheme_option('dt_course','currency')).$starting_price;
 		else:
-			$cost = __('Free', 'dt_themes'); 
-		endif;	
-					
-										
+			$cost = __('Free', 'dt_themes');
+		endif;
+
+
 		echo '<tr>
 				<td class="courses-table-title"><a href="'.$permalink.'">'.$title.'</a></td>
 				<td class="courses-table-type">'.$course_terms.'</td>
@@ -157,12 +157,12 @@ if( $wp_query->have_posts() ):
 				<td class="courses-table-cost">'.$cost.'</td>
 				<td class="courses-table-length">'.$duration.'</td>
 			  </tr>';
-		
+
 	endwhile;
-	
+
 	echo '</tbody>';
 	echo '</table>';
-	
+
 	$total_posts = $wp_query->found_posts;
 	echo dtthemes_ajax_pagination($post_per_page, $curr_page, $total_posts, '');
 
@@ -170,14 +170,14 @@ if( $wp_query->have_posts() ):
 			jQuery(document).ready(function($){
 				if ($(".courses-table-list").length > 0) {
 					$(".courses-table-list").tablesorter();
-				}	
+				}
 			});
 		  </script>';
-		  
+
 else:
 
 	echo '<div class="dt-sc-info-box">'.__('No Courses Found!', 'dt_themes').'</div>';
-		  
+
 endif;
-	
+
 ?>
